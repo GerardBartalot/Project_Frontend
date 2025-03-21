@@ -14,6 +14,7 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 
 sealed interface RemoteMessageUiState {
     data class Success(val remoteMessage: List<User>) : RemoteMessageUiState

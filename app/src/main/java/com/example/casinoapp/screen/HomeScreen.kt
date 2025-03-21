@@ -23,7 +23,10 @@ import com.example.casinoapp.viewModel.RemoteViewModel
 @Composable
 fun HomeScreen(
     navController: NavHostController,
-    remoteViewModel: RemoteViewModel
+    remoteViewModel: RemoteViewModel,
+    onNavigateToRoulette: () -> Unit,
+    onNavigateToSlotMachine: () -> Unit,
+    onNavigateToProfile: () -> Unit,
     ) {
 
     val loginState = remoteViewModel.loginMessageUiState.collectAsState().value
@@ -52,24 +55,9 @@ fun HomeScreen(
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.padding(bottom = 16.dp)
         )
-        Button(
-            onClick = { navController.navigate("getAll") },
-            modifier = Modifier
-                .fillMaxWidth(0.9f)
-        ) {
-            Text("Get All Users")
-        }
         Spacer(modifier = Modifier.height(16.dp))
         Button(
-            onClick = { navController.navigate("findByName") },
-            modifier = Modifier
-                .fillMaxWidth(0.9f)
-        ) {
-            Text("Find Users by Criteria")
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-        Button(
-            onClick = { navController.navigate("slotMachine") },
+            onClick = { onNavigateToSlotMachine() },
             modifier = Modifier
                 .fillMaxWidth(0.9f)
         ) {
@@ -77,7 +65,15 @@ fun HomeScreen(
         }
         Spacer(modifier = Modifier.height(16.dp))
         Button(
-            onClick = { navController.navigate("profile") },
+            onClick = { onNavigateToRoulette() },
+            modifier = Modifier
+                .fillMaxWidth(0.9f)
+        ) {
+            Text("Roulette Game")
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(
+            onClick = { onNavigateToProfile() },
             modifier = Modifier
                 .fillMaxWidth(0.9f)
         ) {
@@ -86,7 +82,6 @@ fun HomeScreen(
 
         Spacer(modifier = Modifier.height(100.dp))
 
-        // Button to logout
         Button(onClick = {
             remoteViewModel.logout()
             navController.navigate("loginScreen") {

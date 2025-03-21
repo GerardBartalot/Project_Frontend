@@ -10,8 +10,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.casinoapp.screen.HomeScreen
 import com.example.casinoapp.screen.LoginScreen
+import com.example.casinoapp.screen.ProfileScreen
 import com.example.casinoapp.screen.RegisterScreen
+import com.example.casinoapp.screen.RouletteScreen
 import com.example.casinoapp.screen.SlotMachineScreen
+import com.example.casinoapp.viewModel.GameViewModel
 import com.example.casinoapp.viewModel.RemoteViewModel
 
 class MainActivity : ComponentActivity() {
@@ -20,8 +23,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
             val remoteViewModel: RemoteViewModel = viewModel()
+            val gameViewModel: GameViewModel = viewModel()
             MaterialTheme {
-                NavHost(navController = navController, startDestination = "loginScreen") {
+                NavHost(navController = navController, startDestination = "homeScreen") {
                     composable("loginScreen") {
                         LoginScreen(
                             remoteViewModel = remoteViewModel,
@@ -32,7 +36,10 @@ class MainActivity : ComponentActivity() {
                     composable("homeScreen") {
                         HomeScreen(
                             navController = navController,
-                            remoteViewModel = remoteViewModel
+                            remoteViewModel = remoteViewModel,
+                            onNavigateToRoulette = { navController.navigate("rouletteScreen") },
+                            onNavigateToSlotMachine = { navController.navigate("slotMachineScreen") },
+                            onNavigateToProfile = { navController.navigate("profileScreen") }
                         )
                     }
                     composable("registerScreen") {
@@ -42,8 +49,20 @@ class MainActivity : ComponentActivity() {
                             onNavigateToHome = { navController.navigate("homeScreen") }
                         )
                     }
-                    composable("slotMachine") {
-                        SlotMachineScreen(navController)
+                    composable("slotMachineScreen") {
+                        SlotMachineScreen(
+                            navController = navController
+                        )
+                    }
+                    composable("rouletteScreen") {
+                        RouletteScreen(
+                            navController = navController
+                        )
+                    }
+                    composable("profileScreen") {
+                        ProfileScreen(
+                            navController = navController
+                        )
                     }
                 }
             }
